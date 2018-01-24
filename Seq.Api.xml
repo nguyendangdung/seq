@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Seq.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Seq.Api.Model.LogEvents.LogEventLevel">
+            <summary>
+            Specifies the meaning and relative importance of a log event.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Verbose">
+            <summary>
+            Anything and everything you might want to know about
+            a running block of code.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Debug">
+            <summary>
+            Internal system events that aren't necessarily
+            observable from the outside.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Information">
+            <summary>
+            The lifeblood of operational intelligence - things
+            happen.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Warning">
+            <summary>
+            Service is degraded or endangered.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Error">
+            <summary>
+            Functionality is unavailable, invariants are broken
+            or data is lost.
+            </summary>
+        </member>
+        <member name="F:Seq.Api.Model.LogEvents.LogEventLevel.Fatal">
+            <summary>
+            If you have a pager, it goes off when one of these
+            occurs.
+            </summary>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.DataResourceGroup.QueryAsync(System.String,System.DateTime,System.Nullable{System.DateTime},Seq.Api.Model.Signals.SignalExpressionPart,Seq.Api.Model.Signals.SignalEntity,System.Nullable{System.TimeSpan})">
+            <summary>
+            Execute an SQL query and retrieve the result set as a structured <see cref="T:Seq.Api.Model.Data.QueryResultPart"/>.
+            </summary>
+            <param name="query">The query to execute.</param>
+            <param name="rangeStartUtc">The earliest timestamp from which to include events in the query result.</param>
+            <param name="rangeEndUtc">The exclusive latest timestamp to which events are included in the query result. The default is the current time.</param>
+            <param name="signal">A signal expression over which the query will be executed.</param>
+            <param name="unsavedSignal">A constructed signal that may not appear on the server, for example, a <see cref="T:Seq.Api.Model.Signals.SignalEntity"/> that has been
+            created but not saved, a signal from another server, or the modified representation of an entity already persisted.</param>
+            <param name="timeout">The query timeout; if not specified, the query will run until completion.</param>
+            <returns>A structured result set.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.DataResourceGroup.QueryCsvAsync(System.String,System.DateTime,System.Nullable{System.DateTime},Seq.Api.Model.Signals.SignalExpressionPart,Seq.Api.Model.Signals.SignalEntity,System.Nullable{System.TimeSpan})">
+            <summary>
+            Execute an SQL query and retrieve the result set as a structured <see cref="T:Seq.Api.Model.Data.QueryResultPart"/>.
+            </summary>
+            <param name="query">The query to execute.</param>
+            <param name="rangeStartUtc">The earliest timestamp from which to include events in the query result.</param>
+            <param name="rangeEndUtc">The exclusive latest timestamp to which events are included in the query result. The default is the current time.</param>
+            <param name="signal">A signal expression over which the query will be executed.</param>
+            <param name="unsavedSignal">A constructed signal that may not appear on the server, for example, a <see cref="T:Seq.Api.Model.Signals.SignalEntity"/> that has been
+            created but not saved, a signal from another server, or the modified representation of an entity already persisted.</param>
+            <param name="timeout">The query timeout; if not specified, the query will run until completion.</param>
+            <returns>A CSV result set.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.EventsResourceGroup.ListAsync(Seq.Api.Model.Signals.SignalExpressionPart,System.String,System.Int32,System.String,System.String,System.Boolean,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32})">
+            <summary>
+            Retrieve a list of events that match a set of conditions. The complete result is buffered into memory,
+            so if a large result set is expected, use InSignalAsync() and lastReadEventId to page the results.
+            </summary>
+            <param name="signal">If provided, a signal expression describing the set of events that will be filtered for the result.</param>
+            <param name="filter">A strict Seq filter expression to match (text expressions must be in double quotes). To
+            convert a "fuzzy" filter into a strict one the way the Seq UI does, use connection.Expressions.ToStrictAsync().</param>
+            <param name="count">The number of events to retrieve. If not specified will default to 30.</param>
+            <param name="startAtId">An event id from which to start searching (inclusively).</param>
+            <param name="afterId">An event id to search after (exclusively).</param>
+            <param name="render">If specified, the event's message template and properties will be rendered into its RenderedMessage property.</param>
+            <param name="fromDateUtc">Earliest (inclusive) date/time from which to search.</param>
+            <param name="toDateUtc">Latest (exclusive) date/time from which to search.</param>
+            <param name="shortCircuitAfter">If specified, the number of events after the first match to keep searching before a partial
+            result set is returned. Used to improve responsiveness when the result is displayed in a user interface, not typically used in
+            batch processing scenarios.</param>
+            <returns>The complete list of events, ordered from least to most recent.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.EventsResourceGroup.InSignalAsync(Seq.Api.Model.Signals.SignalEntity,Seq.Api.Model.Signals.SignalExpressionPart,System.String,System.Int32,System.String,System.String,System.Boolean,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32})">
+            <summary>
+            Retrieve a list of events that match a set of conditions. The complete result is buffered into memory,
+            so if a large result set is expected, use InSignalAsync() and lastReadEventId to page the results.
+            </summary>
+            <param name="unsavedSignal">A constructed signal that may not appear on the server, for example, a <see cref="T:Seq.Api.Model.Signals.SignalEntity"/> that has been
+            created but not saved, a signal from another server, or the modified representation of an entity already persisted.</param>
+            <param name="signal">If provided, a signal expression describing the set of events that will be filtered for the result.</param>
+            <param name="filter">A strict Seq filter expression to match (text expressions must be in double quotes). To
+            convert a "fuzzy" filter into a strict one the way the Seq UI does, use connection.Expressions.ToStrictAsync().</param>
+            <param name="count">The number of events to retrieve. If not specified will default to 30.</param>
+            <param name="startAtId">An event id from which to start searching (inclusively).</param>
+            <param name="afterId">An event id to search after (exclusively).</param>
+            <param name="render">If specified, the event's message template and properties will be rendered into its RenderedMessage property.</param>
+            <param name="fromDateUtc">Earliest (inclusive) date/time from which to search.</param>
+            <param name="toDateUtc">Latest (exclusive) date/time from which to search.</param>
+            <param name="shortCircuitAfter">If specified, the number of events after the first match to keep searching before a partial
+            result set is returned. Used to improve responsiveness when the result is displayed in a user interface, not typically used in
+            batch processing scenarios.</param>
+            <returns>The complete list of events, ordered from least to most recent.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.EventsResourceGroup.DeleteInSignalAsync(Seq.Api.Model.Signals.SignalEntity,Seq.Api.Model.Signals.SignalExpressionPart,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Delete matching events from the stream.
+            </summary>
+            <param name="unsavedSignal">A constructed signal that may not appear on the server, for example, a <see cref="T:Seq.Api.Model.Signals.SignalEntity"/> that has been
+            created but not saved, a signal from another server, or the modified representation of an entity already persisted.</param>
+            <param name="signal">If provided, a signal expression describing the set of events that will be filtered for the result.</param>
+            <param name="filter">A strict Seq filter expression to match (text expressions must be in double quotes). To
+            convert a "fuzzy" filter into a strict one the way the Seq UI does, use connection.Expressions.ToStrictAsync().</param>
+            <param name="fromDateUtc">Earliest (inclusive) date/time from which to delete.</param>
+            <param name="toDateUtc">Latest (exclusive) date/time from which to delete.</param>
+            <returns>A result carrying the count of events deleted.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.EventsResourceGroup.StreamAsync``1(Seq.Api.Model.Signals.SignalExpressionPart,System.String)">
+            <summary>
+            Connect to the live event stream. Dispose the resulting stream to disconnect.
+            </summary>
+            <typeparam name="T">The type into which events should be deserialized.</typeparam>
+            <param name="signal">If provided, a signal expression describing the set of events that will be filtered for the result.</param>
+            <param name="filter">A strict Seq filter expression to match (text expressions must be in double quotes). To
+            convert a "fuzzy" filter into a strict one the way the Seq UI does, use connection.Expressions.ToStrictAsync().</param>
+            <returns>An observable that will stream events from the server to subscribers. Events will be buffered server-side until the first
+            subscriber connects, ensure at least one subscription is made in order to avoid event loss.</returns>
+        </member>
+        <member name="M:Seq.Api.ResourceGroups.EventsResourceGroup.StreamDocumentsAsync(Seq.Api.Model.Signals.SignalExpressionPart,System.String)">
+            <summary>
+            Retrieve a list of events that match a set of conditions. The complete result is buffered into memory,
+            so if a large result set is expected, use InSignalAsync() and lastReadEventId to page the results.
+            </summary>
+            <param name="signal">If provided, a signal expression describing the set of events that will be filtered for the result.</param>
+            <param name="filter">A strict Seq filter expression to match (text expressions must be in double quotes). To
+            convert a "fuzzy" filter into a strict one the way the Seq UI does, use connection.Expressions.ToStrictAsync().</param>
+            <returns>An observable that will stream events from the server to subscribers. Events will be buffered server-side until the first
+            subscriber connects, ensure at least one subscription is made in order to avoid event loss.</returns>
+        </member>
+    </members>
+</doc>

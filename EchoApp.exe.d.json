@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "https://getseq.net/schema/app-definition/v1",
+  "name": "Echo",
+  "description": "Copies events from its input to its output.",
+  "allowReprocessing": false,
+  "executable": "EchoApp.exe", 
+  "arguments":  null, 
+  "settings": {
+    "example": {
+      "displayName": "Example setting",
+      "helpText": "This is an example setting. The value is ignored.",
+      "isOptional": true,
+      "inputType": "checkbox" 
+    }
+  }
+}
